@@ -9,6 +9,7 @@ package authv1
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -189,8 +190,8 @@ type LoginResponse struct {
 	state            protoimpl.MessageState `protogen:"open.v1"`
 	AccessToken      string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
 	RefreshToken     string                 `protobuf:"bytes,2,opt,name=refresh_token,json=refreshToken,proto3" json:"refresh_token,omitempty"`
-	ExpiresIn        int32                  `protobuf:"varint,3,opt,name=expires_in,json=expiresIn,proto3" json:"expires_in,omitempty"`
-	RefreshExpiresIn int32                  `protobuf:"varint,4,opt,name=refresh_expires_in,json=refreshExpiresIn,proto3" json:"refresh_expires_in,omitempty"`
+	ExpiresIn        *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expires_in,json=expiresIn,proto3" json:"expires_in,omitempty"`
+	RefreshExpiresIn *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=refresh_expires_in,json=refreshExpiresIn,proto3" json:"refresh_expires_in,omitempty"`
 	unknownFields    protoimpl.UnknownFields
 	sizeCache        protoimpl.SizeCache
 }
@@ -239,18 +240,18 @@ func (x *LoginResponse) GetRefreshToken() string {
 	return ""
 }
 
-func (x *LoginResponse) GetExpiresIn() int32 {
+func (x *LoginResponse) GetExpiresIn() *timestamppb.Timestamp {
 	if x != nil {
 		return x.ExpiresIn
 	}
-	return 0
+	return nil
 }
 
-func (x *LoginResponse) GetRefreshExpiresIn() int32 {
+func (x *LoginResponse) GetRefreshExpiresIn() *timestamppb.Timestamp {
 	if x != nil {
 		return x.RefreshExpiresIn
 	}
-	return 0
+	return nil
 }
 
 type ValidateTokenRequest struct {
@@ -665,7 +666,7 @@ var File_auth_v1_auth_proto protoreflect.FileDescriptor
 
 const file_auth_v1_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x12auth/v1/auth.proto\x12\aauth.v1\"_\n" +
+	"\x12auth/v1/auth.proto\x12\aauth.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"_\n" +
 	"\x0fRegisterRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
@@ -675,13 +676,13 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\fverify_token\x18\x02 \x01(\tR\vverifyToken\"@\n" +
 	"\fLoginRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
-	"\bpassword\x18\x02 \x01(\tR\bpassword\"\xa4\x01\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"\xdc\x01\n" +
 	"\rLoginResponse\x12!\n" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12#\n" +
-	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x12\x1d\n" +
+	"\rrefresh_token\x18\x02 \x01(\tR\frefreshToken\x129\n" +
 	"\n" +
-	"expires_in\x18\x03 \x01(\x05R\texpiresIn\x12,\n" +
-	"\x12refresh_expires_in\x18\x04 \x01(\x05R\x10refreshExpiresIn\"9\n" +
+	"expires_in\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresIn\x12H\n" +
+	"\x12refresh_expires_in\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\x10refreshExpiresIn\"9\n" +
 	"\x14ValidateTokenRequest\x12!\n" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\"x\n" +
 	"\x15ValidateTokenResponse\x12\x14\n" +
@@ -740,25 +741,28 @@ var file_auth_v1_auth_proto_goTypes = []any{
 	(*ForgotPasswordResponse)(nil), // 9: auth.v1.ForgotPasswordResponse
 	(*ResetPasswordRequest)(nil),   // 10: auth.v1.ResetPasswordRequest
 	(*ResetPasswordResponse)(nil),  // 11: auth.v1.ResetPasswordResponse
+	(*timestamppb.Timestamp)(nil),  // 12: google.protobuf.Timestamp
 }
 var file_auth_v1_auth_proto_depIdxs = []int32{
-	0,  // 0: auth.v1.AuthService.Register:input_type -> auth.v1.RegisterRequest
-	2,  // 1: auth.v1.AuthService.Login:input_type -> auth.v1.LoginRequest
-	4,  // 2: auth.v1.AuthService.ValidateToken:input_type -> auth.v1.ValidateTokenRequest
-	6,  // 3: auth.v1.AuthService.RefreshToken:input_type -> auth.v1.RefreshTokenRequest
-	8,  // 4: auth.v1.AuthService.ForgotPassword:input_type -> auth.v1.ForgotPasswordRequest
-	10, // 5: auth.v1.AuthService.ResetPassword:input_type -> auth.v1.ResetPasswordRequest
-	1,  // 6: auth.v1.AuthService.Register:output_type -> auth.v1.RegisterResponse
-	3,  // 7: auth.v1.AuthService.Login:output_type -> auth.v1.LoginResponse
-	5,  // 8: auth.v1.AuthService.ValidateToken:output_type -> auth.v1.ValidateTokenResponse
-	7,  // 9: auth.v1.AuthService.RefreshToken:output_type -> auth.v1.RefreshTokenResponse
-	9,  // 10: auth.v1.AuthService.ForgotPassword:output_type -> auth.v1.ForgotPasswordResponse
-	11, // 11: auth.v1.AuthService.ResetPassword:output_type -> auth.v1.ResetPasswordResponse
-	6,  // [6:12] is the sub-list for method output_type
-	0,  // [0:6] is the sub-list for method input_type
-	0,  // [0:0] is the sub-list for extension type_name
-	0,  // [0:0] is the sub-list for extension extendee
-	0,  // [0:0] is the sub-list for field type_name
+	12, // 0: auth.v1.LoginResponse.expires_in:type_name -> google.protobuf.Timestamp
+	12, // 1: auth.v1.LoginResponse.refresh_expires_in:type_name -> google.protobuf.Timestamp
+	0,  // 2: auth.v1.AuthService.Register:input_type -> auth.v1.RegisterRequest
+	2,  // 3: auth.v1.AuthService.Login:input_type -> auth.v1.LoginRequest
+	4,  // 4: auth.v1.AuthService.ValidateToken:input_type -> auth.v1.ValidateTokenRequest
+	6,  // 5: auth.v1.AuthService.RefreshToken:input_type -> auth.v1.RefreshTokenRequest
+	8,  // 6: auth.v1.AuthService.ForgotPassword:input_type -> auth.v1.ForgotPasswordRequest
+	10, // 7: auth.v1.AuthService.ResetPassword:input_type -> auth.v1.ResetPasswordRequest
+	1,  // 8: auth.v1.AuthService.Register:output_type -> auth.v1.RegisterResponse
+	3,  // 9: auth.v1.AuthService.Login:output_type -> auth.v1.LoginResponse
+	5,  // 10: auth.v1.AuthService.ValidateToken:output_type -> auth.v1.ValidateTokenResponse
+	7,  // 11: auth.v1.AuthService.RefreshToken:output_type -> auth.v1.RefreshTokenResponse
+	9,  // 12: auth.v1.AuthService.ForgotPassword:output_type -> auth.v1.ForgotPasswordResponse
+	11, // 13: auth.v1.AuthService.ResetPassword:output_type -> auth.v1.ResetPasswordResponse
+	8,  // [8:14] is the sub-list for method output_type
+	2,  // [2:8] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_auth_v1_auth_proto_init() }
