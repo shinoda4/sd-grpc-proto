@@ -13,6 +13,11 @@ service AuthService {
       body: "*"
     };
   };
+  rpc VerifyEmail(VerifyEmailRequest) returns (VerifyEmailResponse){
+    option (google.api.http) = {
+      get: "/api/v1/verify"
+    };
+  };
   rpc Login(LoginRequest) returns (LoginResponse){
       option (google.api.http) = {
       post: "/api/v1/login"
@@ -23,6 +28,11 @@ service AuthService {
     option (google.api.http) = {
       post: "/api/v1/logout"
       body: "*"
+    };
+  };
+  rpc Me(MeRequest) returns (MeResponse) {
+    option (google.api.http) = {
+      get: "/api/v1/me"
     };
   };
   rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse){
@@ -39,13 +49,13 @@ service AuthService {
   };
   rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse){
       option (google.api.http) = {
-      post: "/api/v1/reset-password"
+      post: "/api/v1/forgot-password"
       body: "*"
     };
   };
   rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse){
       option (google.api.http) = {
-      post: "/api/v1/reset-password-confirm"
+      post: "/api/v1/reset-password"
       body: "*"
     };
   };
@@ -63,6 +73,15 @@ message RegisterResponse {
   string verify_token = 3;
 }
 
+message VerifyEmailRequest{
+  string token = 1;
+  bool send_email = 2;
+}
+
+message VerifyEmailResponse{
+  string message = 1;
+}
+
 message LoginRequest {
   string email = 1;
   string password = 2;
@@ -75,6 +94,16 @@ message LoginResponse {
   google.protobuf.Timestamp refresh_expires_in = 4;
 }
 
+message MeRequest{
+}
+
+message MeResponse{
+  string user_id = 1;
+  string email= 2;
+  google.protobuf.Timestamp expires_in = 3;
+  google.protobuf.Timestamp issued_at = 4;
+}
+
 message LogoutRequest {}
 
 message LogoutResponse{
@@ -82,18 +111,15 @@ message LogoutResponse{
 }
 
 message ValidateTokenRequest {
-  string access_token = 1;
 }
 
 message ValidateTokenResponse {
   bool valid = 1;
   string user_id = 2;
   string email = 3;
-  string username = 4;
 }
 
 message RefreshTokenRequest {
-  string refresh_token = 1;
 }
 
 message RefreshTokenResponse {
