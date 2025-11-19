@@ -19,6 +19,12 @@ service AuthService {
       body: "*"
     };
   };
+  rpc Logout(LogoutRequest) returns (LogoutResponse){
+    option (google.api.http) = {
+      post: "/api/v1/logout"
+      body: "*"
+    };
+  };
   rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse){
       option (google.api.http) = {
       post: "/api/v1/verify-token"
@@ -68,6 +74,8 @@ message LoginResponse {
   google.protobuf.Timestamp expires_in = 3;
   google.protobuf.Timestamp refresh_expires_in = 4;
 }
+
+message LogoutRequest {}
 
 message LogoutResponse{
   string message = 1;
