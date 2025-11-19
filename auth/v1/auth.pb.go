@@ -84,8 +84,9 @@ func (x *RegisterRequest) GetPassword() string {
 
 type RegisterResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
-	VerifyToken   string                 `protobuf:"bytes,2,opt,name=verify_token,json=verifyToken,proto3" json:"verify_token,omitempty"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Message       string                 `protobuf:"bytes,2,opt,name=message,proto3" json:"message,omitempty"`
+	VerifyToken   string                 `protobuf:"bytes,3,opt,name=verify_token,json=verifyToken,proto3" json:"verify_token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -118,6 +119,13 @@ func (x *RegisterResponse) ProtoReflect() protoreflect.Message {
 // Deprecated: Use RegisterResponse.ProtoReflect.Descriptor instead.
 func (*RegisterResponse) Descriptor() ([]byte, []int) {
 	return file_auth_v1_auth_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *RegisterResponse) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
 }
 
 func (x *RegisterResponse) GetMessage() string {
@@ -670,10 +678,11 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x0fRegisterRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
-	"\bpassword\x18\x03 \x01(\tR\bpassword\"O\n" +
-	"\x10RegisterResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\x12!\n" +
-	"\fverify_token\x18\x02 \x01(\tR\vverifyToken\"@\n" +
+	"\bpassword\x18\x03 \x01(\tR\bpassword\"h\n" +
+	"\x10RegisterResponse\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x18\n" +
+	"\amessage\x18\x02 \x01(\tR\amessage\x12!\n" +
+	"\fverify_token\x18\x03 \x01(\tR\vverifyToken\"@\n" +
 	"\fLoginRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\"\xdc\x01\n" +

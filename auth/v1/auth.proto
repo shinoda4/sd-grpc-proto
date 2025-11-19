@@ -21,8 +21,9 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
-  string message = 1;
-  string verify_token = 2;
+  string user_id = 1;
+  string message = 2;
+  string verify_token = 3;
 }
 
 message LoginRequest {
