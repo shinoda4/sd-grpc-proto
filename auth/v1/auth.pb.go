@@ -7,6 +7,7 @@
 package authv1
 
 import (
+	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
@@ -421,7 +422,7 @@ func (x *RefreshTokenRequest) GetRefreshToken() string {
 type RefreshTokenResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	AccessToken   string                 `protobuf:"bytes,1,opt,name=access_token,json=accessToken,proto3" json:"access_token,omitempty"`
-	ExpiresIn     int32                  `protobuf:"varint,2,opt,name=expires_in,json=expiresIn,proto3" json:"expires_in,omitempty"`
+	ExpiresIn     *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=expires_in,json=expiresIn,proto3" json:"expires_in,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -463,11 +464,11 @@ func (x *RefreshTokenResponse) GetAccessToken() string {
 	return ""
 }
 
-func (x *RefreshTokenResponse) GetExpiresIn() int32 {
+func (x *RefreshTokenResponse) GetExpiresIn() *timestamppb.Timestamp {
 	if x != nil {
 		return x.ExpiresIn
 	}
-	return 0
+	return nil
 }
 
 type ForgotPasswordRequest struct {
@@ -674,7 +675,7 @@ var File_auth_v1_auth_proto protoreflect.FileDescriptor
 
 const file_auth_v1_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x12auth/v1/auth.proto\x12\aauth.v1\x1a\x1fgoogle/protobuf/timestamp.proto\"_\n" +
+	"\x12auth/v1/auth.proto\x12\aauth.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\"_\n" +
 	"\x0fRegisterRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\x12\x1a\n" +
@@ -700,11 +701,11 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x05email\x18\x03 \x01(\tR\x05email\x12\x1a\n" +
 	"\busername\x18\x04 \x01(\tR\busername\":\n" +
 	"\x13RefreshTokenRequest\x12#\n" +
-	"\rrefresh_token\x18\x01 \x01(\tR\frefreshToken\"X\n" +
+	"\rrefresh_token\x18\x01 \x01(\tR\frefreshToken\"t\n" +
 	"\x14RefreshTokenResponse\x12!\n" +
-	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12\x1d\n" +
+	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x129\n" +
 	"\n" +
-	"expires_in\x18\x02 \x01(\x05R\texpiresIn\"I\n" +
+	"expires_in\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\texpiresIn\"I\n" +
 	"\x15ForgotPasswordRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\busername\x18\x02 \x01(\tR\busername\"2\n" +
@@ -715,14 +716,14 @@ const file_auth_v1_auth_proto_rawDesc = "" +
 	"\x14new_password_confirm\x18\x02 \x01(\tR\x12newPasswordConfirm\x12\x14\n" +
 	"\x05token\x18\x03 \x01(\tR\x05token\"1\n" +
 	"\x15ResetPasswordResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage2\xc6\x03\n" +
-	"\vAuthService\x12?\n" +
-	"\bRegister\x12\x18.auth.v1.RegisterRequest\x1a\x19.auth.v1.RegisterResponse\x126\n" +
-	"\x05Login\x12\x15.auth.v1.LoginRequest\x1a\x16.auth.v1.LoginResponse\x12N\n" +
-	"\rValidateToken\x12\x1d.auth.v1.ValidateTokenRequest\x1a\x1e.auth.v1.ValidateTokenResponse\x12K\n" +
-	"\fRefreshToken\x12\x1c.auth.v1.RefreshTokenRequest\x1a\x1d.auth.v1.RefreshTokenResponse\x12Q\n" +
-	"\x0eForgotPassword\x12\x1e.auth.v1.ForgotPasswordRequest\x1a\x1f.auth.v1.ForgotPasswordResponse\x12N\n" +
-	"\rResetPassword\x12\x1d.auth.v1.ResetPasswordRequest\x1a\x1e.auth.v1.ResetPasswordResponseB2Z0github.com/shinoda4/sd-grpc-proto/auth/v1;authv1b\x06proto3"
+	"\amessage\x18\x01 \x01(\tR\amessage2\x88\x05\n" +
+	"\vAuthService\x12\\\n" +
+	"\bRegister\x12\x18.auth.v1.RegisterRequest\x1a\x19.auth.v1.RegisterResponse\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/api/v1/register\x12P\n" +
+	"\x05Login\x12\x15.auth.v1.LoginRequest\x1a\x16.auth.v1.LoginResponse\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/api/v1/login\x12o\n" +
+	"\rValidateToken\x12\x1d.auth.v1.ValidateTokenRequest\x1a\x1e.auth.v1.ValidateTokenResponse\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/api/v1/verify-token\x12g\n" +
+	"\fRefreshToken\x12\x1c.auth.v1.RefreshTokenRequest\x1a\x1d.auth.v1.RefreshTokenResponse\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/api/v1/refresh\x12t\n" +
+	"\x0eForgotPassword\x12\x1e.auth.v1.ForgotPasswordRequest\x1a\x1f.auth.v1.ForgotPasswordResponse\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/api/v1/reset-password\x12y\n" +
+	"\rResetPassword\x12\x1d.auth.v1.ResetPasswordRequest\x1a\x1e.auth.v1.ResetPasswordResponse\")\x82\xd3\xe4\x93\x02#:\x01*\"\x1e/api/v1/reset-password-confirmB2Z0github.com/shinoda4/sd-grpc-proto/auth/v1;authv1b\x06proto3"
 
 var (
 	file_auth_v1_auth_proto_rawDescOnce sync.Once
@@ -755,23 +756,24 @@ var file_auth_v1_auth_proto_goTypes = []any{
 var file_auth_v1_auth_proto_depIdxs = []int32{
 	12, // 0: auth.v1.LoginResponse.expires_in:type_name -> google.protobuf.Timestamp
 	12, // 1: auth.v1.LoginResponse.refresh_expires_in:type_name -> google.protobuf.Timestamp
-	0,  // 2: auth.v1.AuthService.Register:input_type -> auth.v1.RegisterRequest
-	2,  // 3: auth.v1.AuthService.Login:input_type -> auth.v1.LoginRequest
-	4,  // 4: auth.v1.AuthService.ValidateToken:input_type -> auth.v1.ValidateTokenRequest
-	6,  // 5: auth.v1.AuthService.RefreshToken:input_type -> auth.v1.RefreshTokenRequest
-	8,  // 6: auth.v1.AuthService.ForgotPassword:input_type -> auth.v1.ForgotPasswordRequest
-	10, // 7: auth.v1.AuthService.ResetPassword:input_type -> auth.v1.ResetPasswordRequest
-	1,  // 8: auth.v1.AuthService.Register:output_type -> auth.v1.RegisterResponse
-	3,  // 9: auth.v1.AuthService.Login:output_type -> auth.v1.LoginResponse
-	5,  // 10: auth.v1.AuthService.ValidateToken:output_type -> auth.v1.ValidateTokenResponse
-	7,  // 11: auth.v1.AuthService.RefreshToken:output_type -> auth.v1.RefreshTokenResponse
-	9,  // 12: auth.v1.AuthService.ForgotPassword:output_type -> auth.v1.ForgotPasswordResponse
-	11, // 13: auth.v1.AuthService.ResetPassword:output_type -> auth.v1.ResetPasswordResponse
-	8,  // [8:14] is the sub-list for method output_type
-	2,  // [2:8] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	12, // 2: auth.v1.RefreshTokenResponse.expires_in:type_name -> google.protobuf.Timestamp
+	0,  // 3: auth.v1.AuthService.Register:input_type -> auth.v1.RegisterRequest
+	2,  // 4: auth.v1.AuthService.Login:input_type -> auth.v1.LoginRequest
+	4,  // 5: auth.v1.AuthService.ValidateToken:input_type -> auth.v1.ValidateTokenRequest
+	6,  // 6: auth.v1.AuthService.RefreshToken:input_type -> auth.v1.RefreshTokenRequest
+	8,  // 7: auth.v1.AuthService.ForgotPassword:input_type -> auth.v1.ForgotPasswordRequest
+	10, // 8: auth.v1.AuthService.ResetPassword:input_type -> auth.v1.ResetPasswordRequest
+	1,  // 9: auth.v1.AuthService.Register:output_type -> auth.v1.RegisterResponse
+	3,  // 10: auth.v1.AuthService.Login:output_type -> auth.v1.LoginResponse
+	5,  // 11: auth.v1.AuthService.ValidateToken:output_type -> auth.v1.ValidateTokenResponse
+	7,  // 12: auth.v1.AuthService.RefreshToken:output_type -> auth.v1.RefreshTokenResponse
+	9,  // 13: auth.v1.AuthService.ForgotPassword:output_type -> auth.v1.ForgotPasswordResponse
+	11, // 14: auth.v1.AuthService.ResetPassword:output_type -> auth.v1.ResetPasswordResponse
+	9,  // [9:15] is the sub-list for method output_type
+	3,  // [3:9] is the sub-list for method input_type
+	3,  // [3:3] is the sub-list for extension type_name
+	3,  // [3:3] is the sub-list for extension extendee
+	0,  // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_auth_v1_auth_proto_init() }

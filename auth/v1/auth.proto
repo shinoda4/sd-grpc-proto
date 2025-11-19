@@ -2,16 +2,47 @@ syntax = "proto3";
 
 package auth.v1;
 import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
 
 option go_package = "github.com/shinoda4/sd-grpc-proto/auth/v1;authv1";
 
 service AuthService {
-  rpc Register(RegisterRequest) returns (RegisterResponse);
-  rpc Login(LoginRequest) returns (LoginResponse);
-  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
-  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
-  rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse);
-  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
+  rpc Register(RegisterRequest) returns (RegisterResponse){
+    option (google.api.http) = {
+      post: "/api/v1/register"
+      body: "*"
+    };
+  };
+  rpc Login(LoginRequest) returns (LoginResponse){
+      option (google.api.http) = {
+      post: "/api/v1/login"
+      body: "*"
+    };
+  };
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse){
+      option (google.api.http) = {
+      post: "/api/v1/verify-token"
+      body: "*"
+    };
+  };
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse){
+      option (google.api.http) = {
+      post: "/api/v1/refresh"
+      body: "*"
+    };
+  };
+  rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse){
+      option (google.api.http) = {
+      post: "/api/v1/reset-password"
+      body: "*"
+    };
+  };
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse){
+      option (google.api.http) = {
+      post: "/api/v1/reset-password-confirm"
+      body: "*"
+    };
+  };
 }
 
 message RegisterRequest {
@@ -55,7 +86,7 @@ message RefreshTokenRequest {
 
 message RefreshTokenResponse {
   string access_token = 1;
-  int32 expires_in = 2;
+  google.protobuf.Timestamp expires_in = 2;
 }
 
 message ForgotPasswordRequest {
