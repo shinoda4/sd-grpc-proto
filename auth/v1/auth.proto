@@ -69,6 +69,10 @@ message LoginResponse {
   google.protobuf.Timestamp refresh_expires_in = 4;
 }
 
+message LogoutResponse{
+  string message = 1;
+}
+
 message ValidateTokenRequest {
   string access_token = 1;
 }
