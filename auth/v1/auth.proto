@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+package auth.v1;
+
+option go_package = "github.com/shinoda4/sd-grpc-proto/auth/v1;authv1";
+
+service AuthService {
+  rpc Register(RegisterRequest) returns (RegisterResponse);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc ValidateToken(ValidateTokenRequest) returns (ValidateTokenResponse);
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse);
+  rpc ForgotPassword(ForgotPasswordRequest) returns (ForgotPasswordResponse);
+  rpc ResetPassword(ResetPasswordRequest) returns (ResetPasswordResponse);
+}
+
+message RegisterRequest {
+  string email = 1;
+  string username = 2;
+  string password = 3;
+}
+
+message RegisterResponse {
+  string message = 1;
+  string verify_token = 2;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  int32 expires_in = 3;
+  int32 refresh_expires_in = 4;
+}
+
+message ValidateTokenRequest {
+  string access_token = 1;
+}
+
+message ValidateTokenResponse {
+  bool valid = 1;
+  string user_id = 2;
+  string email = 3;
+  string username = 4;
+}
+
+message RefreshTokenRequest {
+  string refresh_token = 1;
+}
+
+message RefreshTokenResponse {
+  string access_token = 1;
+  int32 expires_in = 2;
+}
+
+message ForgotPasswordRequest {
+  string email = 1;
+  string username = 2;
+}
+
+message ForgotPasswordResponse {
+  string message = 1;
+}
+
+message ResetPasswordRequest {
+  string new_password = 1;
+  string new_password_confirm = 2;
+  string token = 3; // Usually needed for reset flow
+}
+
+message ResetPasswordResponse {
+  string message = 1;
+}
