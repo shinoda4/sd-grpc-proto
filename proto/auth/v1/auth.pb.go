@@ -25,6 +25,7 @@ const (
 
 type HealthCheckRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	Message       string                 `protobuf:"bytes,1,opt,name=message,proto3" json:"message,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -57,6 +58,13 @@ func (x *HealthCheckRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use HealthCheckRequest.ProtoReflect.Descriptor instead.
 func (*HealthCheckRequest) Descriptor() ([]byte, []int) {
 	return file_auth_v1_auth_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *HealthCheckRequest) GetMessage() string {
+	if x != nil {
+		return x.Message
+	}
+	return ""
 }
 
 type HealthCheckResponse struct {
@@ -1011,8 +1019,9 @@ var File_auth_v1_auth_proto protoreflect.FileDescriptor
 
 const file_auth_v1_auth_proto_rawDesc = "" +
 	"\n" +
-	"\x12auth/v1/auth.proto\x12\aauth.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\"\x14\n" +
-	"\x12HealthCheckRequest\"-\n" +
+	"\x12auth/v1/auth.proto\x12\aauth.v1\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\".\n" +
+	"\x12HealthCheckRequest\x12\x18\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"-\n" +
 	"\x13HealthCheckResponse\x12\x16\n" +
 	"\x06status\x18\x01 \x01(\tR\x06status\"_\n" +
 	"\x0fRegisterRequest\x12\x14\n" +
