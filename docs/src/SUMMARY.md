@@ -1,4 +1,5 @@
 # Summary
 
 - [Overview](./overview.md)
-- [Auth v1](./auth_v1.md)
+- [Auth](./auth/index.md)
+    - [V1](./auth/v1.md)

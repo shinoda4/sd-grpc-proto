@@ -23,7 +23,7 @@ The `sd-grpc-proto` repository is a centralized collection of Protocol Buffer (`
 
 Provides authentication and user management functionality including registration, login, token management, and password reset.
 
-**Documentation**: [Auth v1 API Reference](./auth_v1.md)
+**Documentation**: [Auth v1 API Reference](./auth/v1.md)
 
 ## Buf Workflow
 
@@ -34,7 +34,7 @@ This repository uses [Buf](https://buf.build) for managing Protocol Buffers:
 Ensures proto files follow best practices:
 
 ```bash
-buf lint
+make lint
 ```
 
 ### Breaking Change Detection
@@ -42,7 +42,7 @@ buf lint
 Checks for breaking changes against a previous version:
 
 ```bash
-buf breaking --against '.git#branch=main'
+make breaking
 ```
 
 ### Code Generation
@@ -50,37 +50,13 @@ buf breaking --against '.git#branch=main'
 Generates Go code, gRPC stubs, and grpc-gateway:
 
 ```bash
-buf generate
+make generate
 ```
 
 Configuration is in `buf.gen.yaml`:
-- `protoc-gen-go`: Go message types
-- `protoc-gen-go-grpc`: gRPC client/server code
-- `protoc-gen-grpc-gateway`: HTTP/JSON gateway
-
-## Repository Structure
-
-```
-sd-grpc-proto/
-├── auth/
-│   └── v1/
-│       ├── auth.proto          # Proto definitions
-│       ├── auth.pb.go          # Generated messages
-│       ├── auth_grpc.pb.go     # Generated gRPC code
-│       └── auth.pb.gw.go       # Generated gateway
-├── docs/                       # This documentation
-│   ├── book.toml               # mdBook config
-│   └── src/
-│       ├── overview.md         # This page
-│       ├── auth_v1.md          # Auth API reference
-│       └── SUMMARY.md          # Table of contents
-├── buf.yaml                    # Buf configuration
-├── buf.gen.yaml                # Code generation config
-├── buf.lock                    # Dependency lock
-├── Makefile                    # Build commands
-├── go.mod                      # Go module
-└── README.md                   # Project README
-```
+- `go`: Go message types
+- `go-grpc`: gRPC client/server code
+- `grpc-gateway`: HTTP/JSON gateway
 
 ## Using This Repository
 
@@ -89,7 +65,7 @@ sd-grpc-proto/
 Import in your Go project:
 
 ```go
-import authv1 "github.com/shinoda4/sd-grpc-proto/auth/v1"
+import authpb "github.com/shinoda4/sd-grpc-proto/proto/auth/v1"
 ```
 
 ### Generating Code
@@ -97,13 +73,7 @@ import authv1 "github.com/shinoda4/sd-grpc-proto/auth/v1"
 After modifying proto files:
 
 ```bash
-buf generate
-```
-
-Or using Make:
-
-```bash
-make gen
+make generate
 ```
 
 ## Building This Documentation
@@ -111,8 +81,7 @@ make gen
 This documentation is built with **mdBook**:
 
 ```bash
-cd docs
-mdbook build
+make build
 ```
 
 To serve locally:
@@ -122,10 +91,10 @@ make doc
 # Or: mdbook serve -p 3000 ./docs
 ```
 
-Then open http://localhost:3000
+Then open [http://localhost:3000](http://localhost:3000)
 
 ## Next Steps
 
-- [Auth v1 API Reference](./auth_v1.md) - Complete API documentation
+- [Auth API Reference](./auth/index.md) - Complete API documentation
 - [README](../README.md) - Project setup and usage guide
 
